@@ -11,6 +11,7 @@ namespace OnlineShop2022
 {
     public class Program
     {
+        //Init
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
