@@ -26,9 +26,15 @@ namespace OnlineShop2022.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRole(string roleName)
         {
+            var newRole = new IdentityRole
+            {
+                Name = roleName,
+                NormalizedName = roleName.ToUpper()
+            };
+
             if (roleName != null)
             {
-                await _roleManager.CreateAsync(new IdentityRole(roleName.Trim()));
+                await _roleManager.CreateAsync(newRole);
             }
             return RedirectToAction("Index");
         }
