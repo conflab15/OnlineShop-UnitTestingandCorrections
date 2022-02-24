@@ -31,7 +31,8 @@ namespace OnlineShop2022.Areas.Admin
         // GET: Admin/Category/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            return NotFound();
+            //Commented out the line below. Regardless of what ID is passed to this controller action, the controller would always return a NotFound exception.
+            //return NotFound();
 
             if (id == null)
             {
