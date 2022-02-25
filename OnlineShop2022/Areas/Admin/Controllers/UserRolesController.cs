@@ -43,7 +43,10 @@ namespace OnlineShop2022.Areas.Admin.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            if (user != null)
+            //Error here with the logic of the If statement. if(user != null), redirect to index. When a user is present, the delete action is never actioned. 
+            //Fixing the error was done by changing the logic from "!=" to "==", which now checks to see if the user is not present, and then redirect to the index action. 
+
+            if (user == null)
             {
                 return RedirectToAction("Index");
             }

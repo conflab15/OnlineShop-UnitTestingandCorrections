@@ -43,7 +43,9 @@ namespace OnlineShop2022.Areas.Admin.Controllers
         
         public async Task<IActionResult> DeleteRole(string id)
         {
-            if (id == null)
+            //Error here - the logic of the if statement is incorrect. If a valid ID is passed, it will not equal null and Redirect.
+            //Fixed the error - changed the if statement logic from "==" to "!-" to work if the ID is not empty. 
+            if (id != null)
             {
                 var role = await _roleManager.FindByIdAsync(id);
                 await _roleManager.DeleteAsync(role);

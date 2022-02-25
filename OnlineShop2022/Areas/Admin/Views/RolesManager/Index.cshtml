@@ -29,7 +29,9 @@
                 <td>@role.Id</td>
                 <td>@role.Name</td>
                 <td>
-                    <a class="btn btn-danger" asp-action="DeleteRole" asp-route-id="@role.Name">Delete</a>
+                    <!-- Error here, the asp-route-id passes a name to the DeleteRole method instead of the ID, which causes a NullException error-->
+                    <!-- The fixed code replaced the asp-route-id with role.Id -->
+                    <a class="btn btn-danger" asp-action="DeleteRole" asp-route-id="@role.Id">Delete</a>
                 </td>
             </tr>
 

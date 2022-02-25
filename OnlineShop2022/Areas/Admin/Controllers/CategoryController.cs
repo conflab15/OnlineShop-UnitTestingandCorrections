@@ -32,6 +32,7 @@ namespace OnlineShop2022.Areas.Admin
         public async Task<IActionResult> Details(int? id)
         {
             //Commented out the line below. Regardless of what ID is passed to this controller action, the controller would always return a NotFound exception.
+            //Although this was an errory, the Category/Details action is never used within the solution.
             //return NotFound();
 
             if (id == null)
