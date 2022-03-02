@@ -13,7 +13,10 @@
                     <img src="@product.ImagePath" class="card-img-top img-product-main" alt="@product.">
                     <div class="card-body">
                         <p class="card-text">@product.Description</p>
-                         <p class="card-text">£@product.Price</p>
+                        <p class="card-text">£@product.Price</p>
+                        <!-- Code Addition: within the Products View, there was previously no ability to add a product to the basket within this view.
+                             The button, with the valid route, has been added to this view.-->
+                        <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-ProductId="@product.Id">Add to cart</a>
                     </div>
                 </div>
             </div>

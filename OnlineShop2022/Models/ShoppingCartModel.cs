@@ -102,8 +102,10 @@ namespace OnlineShop2022.Models
 
         public double GetShoppingCartTotal()
         {
+            //Error here, when obtaining the Cart Total, the calculation is multiplying the Product ID by the Amount in the Basket
+            //The fixed code now multiplies the price of the Product by the amount, instead of the Product ID
             var total = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)
-                .Select(c => c.Product.Id * c.Amount).Sum();
+                .Select(c => c.Product.Price * c.Amount).Sum();
             return total;
         }
     }
