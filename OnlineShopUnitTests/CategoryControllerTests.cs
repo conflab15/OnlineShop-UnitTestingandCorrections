@@ -42,7 +42,6 @@ namespace OnlineShopUnitTests
         public async Task CategoryControllerEditAction_ReturnNotFoundIfIDNull()
         {
             //Tests - Edit action, if ID is null, return NotFound()
-            CreateMockDb();
             var controller = new CategoryController(_db);
 
             //Act
@@ -52,11 +51,10 @@ namespace OnlineShopUnitTests
             Assert.IsType<NotFoundResult>(result);
         }
 
-        [Fact(Skip = "Skip this, doesn't work")]
+        [Fact(Skip = "Issues with the _db")]
         public async Task CategoryControllerDetailsAction_ReturnsCategoryIfIDValid()
         {
             //Tests - Details Action, if the ID is valid, returns Category Details.
-            CreateMockDb();
             var controller = new CategoryController(_db); //Controller
             //CategoryModel model = await _context.Categories.FirstOrDefaultAsync(m => m.Id == 1); //Finding the product to make the comparison
 

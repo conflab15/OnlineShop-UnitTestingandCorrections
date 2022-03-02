@@ -12,9 +12,7 @@
                 <div class="card">
                     <img src="@product.ImagePath" class="card-img-top img-product-main" alt="@product.">
                     <div class="card-body">
-                    <!-- Error here, no "at" symbol at the beginning of product.Description to access the product properties -->
-                    <!-- Fixed code now includes the 'at' symbol to reference the product property -->
-                        <p class="card-text">@product.Description</p>
+                        <p class="card-text">product.Description</p>
                          <p class="card-text">£@product.Price</p>
                            <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-ProductId="@product.Id">Add to cart</a>
                     </div>
