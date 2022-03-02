@@ -1,8 +1,41 @@
 ﻿@model IEnumerable<OnlineShop2022.Models.ProductModel>
 
 @{
-    ViewData["Title"] = "Products Page";
+    ViewData["Title"] = "Products ";
 }
+
+<!-- Solution Additions:  The ability to search and filter products. -->
+<h2>Browse Products</h2>
+
+<form asp-action="Products" method="get">
+    <div class="container justify-content-center">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group mb-3"> <input type="text" class="form-control input-text" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search by description....">
+                    <div class="input-group-append"> <input type="submit" class="btn btn-outline-warning btn-lg" type="button"></input> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row justify-content-center">
+    <div class="col align-items-center">
+        <a asp-action="Products" asp-route-sortOrder="@ViewData["NameSortParam"]" class="btn btn-success">Sort by Name (A-Z)</a>
+    </div>
+    <div class="col justify-content-center">
+        <a asp-action="Products" asp-route-sortOrder="@ViewData["PriceSortParam"]" class="btn btn-success">Sort by Price (Ascending)</a>
+    </div>
+    <div class="col justify-content-center">
+        <a asp-action="Products" class="btn btn-danger">Back to full Products list</a>
+    </div>
+
+
+                  
+
+
+
+</div>
 
 <div class="row">
     @{
@@ -10,11 +43,11 @@
         {
             <div class="col-md-4">
                 <div class="card">
-                    <img src="@product.ImagePath" class="card-img-top img-product-main" alt="@product.">
+                    <img src="@product.ImagePath" class="card-img-top img-product-main" alt="@product.Description">
                     <div class="card-body">
                         <p class="card-text">@product.Description</p>
                         <p class="card-text">£@product.Price</p>
-                        <!-- Code Addition: within the Products View, there was previously no ability to add a product to the basket within this view.
+                        <!-- Error Fix: within the Products View, there was previously no ability to add a product to the basket within this view.
                              The button, with the valid route, has been added to this view.-->
                         <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-ProductId="@product.Id">Add to cart</a>
                     </div>

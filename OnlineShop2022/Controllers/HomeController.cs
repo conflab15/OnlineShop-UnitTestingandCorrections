@@ -30,10 +30,36 @@ namespace OnlineShop2022.Controllers
             return View(products);
         }
 
-        public async Task<IActionResult> Products(string id)
+        //Code Additions: Sorting and Filtering the Products.
+        public async Task<IActionResult> Products(string sortOrder, string searchString)
         {
-            var products = await _db.Products.ToListAsync();
-            return View(products);
+            ViewData["NameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["PriceSortParam"] = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewData["CurrentFilter"] = searchString;
+            var products = from p in _db.Products
+                           select p;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.Description.Contains(searchString));
+            }
+            switch(sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Description);
+                    break;
+                case "Price":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Description);
+                    break;
+            }
+
+            //var products = await _db.Products.ToListAsync();
+            return View(await products.AsNoTracking().ToListAsync());
         }
 
 
