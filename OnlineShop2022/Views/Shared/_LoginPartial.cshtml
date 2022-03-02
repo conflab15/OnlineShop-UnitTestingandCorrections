@@ -14,7 +14,9 @@
     {
          currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
         <li class="nav-item mx-2">
-            <a class="btn btn-outline-light" asp-area="" asp-controller="Home" asp-action="Privacy" class="btn btn-outline-light ">Browse</a>
+            <!-- Error here, the asp-action directs to the Privacy component, instead of the Products page -->
+            <!-- Amended code now shows "Products" in the asp-action -->
+            <a class="btn btn-outline-light" asp-area="" asp-controller="Home" asp-action="Products" class="btn btn-outline-light ">Browse</a>
         </li>
          
         <li  class="nav-item mx-2">
