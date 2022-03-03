@@ -31,10 +31,21 @@ namespace OnlineShop2022.Controllers
         }
 
         //Code Additions: Sorting and Filtering the Products.
-        public async Task<IActionResult> Products(string sortOrder, string searchString)
+        public async Task<IActionResult> Products(string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParam"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["PriceSortParam"] = sortOrder == "Price" ? "price_desc" : "Price";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             ViewData["CurrentFilter"] = searchString;
             var products = from p in _db.Products
                            select p;
@@ -58,8 +69,8 @@ namespace OnlineShop2022.Controllers
                     break;
             }
 
-            //var products = await _db.Products.ToListAsync();
-            return View(await products.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<ProductModel>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
 
