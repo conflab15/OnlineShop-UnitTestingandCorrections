@@ -52,8 +52,6 @@ namespace OnlineShop2022.Areas.Admin
         [HttpPost]
         public async Task<IActionResult> Create(ProductViewModel vm)
         {
-
-
             if (ModelState.IsValid)
             {
                 try
@@ -79,9 +77,7 @@ namespace OnlineShop2022.Areas.Admin
                     });
                     return View(vm);
                 }
-
             }
-
             vm.Categories = _db.Categories.Select(i => new SelectListItem
             {
                 Text = i.Name,

@@ -4,46 +4,62 @@
     ViewData["Title"] = "My Cart";
 }
 
-<h2>Your shopping cart</h2>
-<h4>Here are the Products in your shopping cart.</h4>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Quantity</th>
-            <th>Description</th>
-            <th class="text-right">Price</th>
-            <th class="text-right">Subtotal</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var product in Model.ShoppingCart.ShoppingCartItems)
-        { 
-        <tr>
-            <td class="text-center">@product.Amount
-            
-             </td>
-            <td class="text-left">@product.Product.Description</td>
-            <td class="text-right">@product.Product.Price.ToString("c")</td>
-            <td class="text-right">
-                @((product.Amount*product.Product.Price).ToString("c"))
-                             <a class="btn btn-primary ms-3" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-ProductId="@product.Product.Id">Remove</a>
+<h2>Your Shopping Cart</h2>
+<h4>Here are the Products in your shopping cart:</h4>
 
-            </td>
-        </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">
-                @Model.ShoppingCartTotal.ToString("c")
-            </td>
-        </tr>
-    </tfoot>
-</table>
+<!-- Solution fix, an error message is displayed when the cart is empty, when prevents an order being placed with no products. -->
+@if (Model.ShoppingCart.ShoppingCartItems.Count == 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Whoops!</h4>
+            <p>It looks like you don't have any products in your cart! You need at least one product to place an order!</p>
+            <hr>
+            <a class="btn btn-outline-light mb-0" asp-controller="Home" asp-action="Products" class="btn btn-outline-light ">Browse Products</a>
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped pt-2">
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th class="text-right">Price</th>
+                    <th class="text-right">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var product in Model.ShoppingCart.ShoppingCartItems)
+                { 
+                <tr>
+                    <td class="text-center">@product.Amount</td>
+                    <td class="text-left">@product.Product.Description</td>
+                    <td class="text-left">
+                        <img src="@product.Product.ImagePath" class="img-thumbnail" alt="@product.Product.Description" width=25% height=55%>
+                    </td>
+                    <td class="text-right">@product.Product.Price.ToString("c")</td>
+                    <td class="text-right">
+                        @((product.Amount*product.Product.Price).ToString("c"))
+                                        <a class="btn btn-primary ms-3" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-ProductId="@product.Product.Id">Remove</a>
 
-<div class="text-center">
-    <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Proceed to Checkout</a>
-    <a class="btn btn-danger ms-3" asp-controller="ShoppingCart" asp-action="ClearCart">Empty Basket</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right">Total:</td>
+                    <td class="text-right">
+                        @Model.ShoppingCartTotal.ToString("c")
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
 
-</div>
+        <div class="text-center">
+            <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Proceed to Checkout</a>
+            <a class="btn btn-danger ms-3" asp-controller="ShoppingCart" asp-action="ClearCart">Empty Basket</a>
+
+        </div>
+    }

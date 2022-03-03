@@ -1,84 +1,99 @@
-﻿@model OrderModel
+﻿@model CheckoutViewModel;
 
-<div class="row">
-    <div class="m-4">
-        <h1>Enter your delivery details</h1>
-        <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
-            <div asp-validation-summary="All" class="text-danger"></div>
+@{
+    ViewData["Title"] = "Checkout";
+}
+<!-- Solution Amendment, the checkout page now autofills some data from the users account, and displays the products that the user is purchasing in a row next to the input fields.-->
 
-            <div class="form-group">
-                <label asp-for="LastName" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="LastName" class="form-control" />
-                    <span asp-validation-for="LastName" class="text-danger"></span>
-                </div>
+<div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://www.logolynx.com/images/logolynx/cf/cff9eb13659bb9ea6af7af6522f4d309.png" alt="Shopping Cart Img" width="80" height="80">
+        <h2>Checkout</h2>
+        <p class="lead">Please enter the required details!</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your Shopping Cart</span>
+            <span class="badge badge-secondary badge-pill">@Model.CartItems.Count</span>
+          </h4>
+          <ul class="list-group mb-3">
+            @foreach(var product in Model.CartItems)
+            {
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">@product.Product.Description</h6>
+                    <small class="text-muted">Quantity: @product.Amount</small>
+                  </div>
+                  <span class="text-muted">£@product.Product.Price</span>
+                </li>  
+            }
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total (GBP)</span>
+              <strong>£@Model.CartTotal</strong>
+            </li>
+          </ul>
+
+        </div>
+        <div class="col-md-8 order-md-1">
+          <h4 class="mb-3">Shipping/Billing Address</h4>
+          <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label asp-for="Order.FirstName"></label>
+                <input asp-for="Order.FirstName" class="form-control" placeholder="Enter your first name" value="@Model.Forename" required>
+                <span asp-validation-for="Order.FirstName" class="text-danger"></span>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label asp-for="Order.LastName"></label>
+                <input asp-for="Order.LastName" class="form-control" placeholder="Enter your second name" value="@Model.Surname" required>
+                <span asp-validation-for="Order.LastName" class="text-danger"></span>
+              </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="FirstName" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="FirstName" class="form-control" />
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
-                </div>
+            <div class="mb-3">
+              <label asp-for="Order.Email"></label>
+              <input asp-for="Order.Email" class="form-control" placeholder="you@example.com" value="@Model.Email">
+              <span asp-validation-for="Order.Email" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="AddressLine1" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="AddressLine1" class="form-control" />
-                    <span asp-validation-for="AddressLine1" class="text-danger"></span>
-                </div>
+            <div class="mb-3">
+                <label asp-for="Order.AddressLine1"></label>
+                <input asp-for="Order.AddressLine1" class="form-control" placeholder="1234 Main St" required>
+                <span asp-validation-for="Order.AddressLine1" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="AddressLine2" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="AddressLine2" class="form-control" />
-                    <span asp-validation-for="AddressLine2" class="text-danger"></span>
-                </div>
+            <div class="mb-3">
+              <label asp-for="Order.AddressLine2"></label>
+              <input asp-for="Order.AddressLine2" class="form-control" placeholder="Apartment or suite">
+              <span asp-validation-for="Order.AddressLine2" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Postcode" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="Postcode" class="form-control" />
-                    <span asp-validation-for="Postcode" class="text-danger"></span>
-                </div>
+            <div class="mb-3">
+              <label asp-for="Order.City"></label>
+              <input asp-for="Order.City" class="form-control" placeholder="London">
+              <span asp-validation-for="Order.City" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="City" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="City" class="form-control" />
-                    <span asp-validation-for="City" class="text-danger"></span>
-                </div>
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label asp-for="Order.Country"></label>
+                <select asp-for="Order.Country" class="custom-select d-block w-100" required>
+                  <option value="">Choose...</option>
+                  <option>United Kingdom</option>
+                  <option>United States</option>
+                </select>
+                <span asp-validation-for="Order.Country" class="text-danger"></span>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label asp-for="Order.Postcode"></label>
+                <input asp-for="Order.Postcode" class="form-control" placeholder="" required>
+              </div>
             </div>
-
-
-            <div class="form-group">
-                <label asp-for="Country" class="col-md-2 control-label"></label>
-                <div class="col-md">
-                    <input asp-for="Country" class="form-control" />
-                    <span asp-validation-for="Country" class="text-danger"></span>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label asp-for="Email" class="col-md-2 control-label"></label>
-                  <div class="col-md">
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md w-100 mt-4">
-                    <button type="submit" class="btn btn-primary"> Proceed to Payment</button>
-                </div>
-            </div>
-
-
-        </form>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Proceed to Payment</button>
+          </form>
+        </div>
+      </div>
     </div>
-</div>

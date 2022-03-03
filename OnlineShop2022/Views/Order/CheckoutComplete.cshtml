@@ -1,1 +1,16 @@
-﻿<div class="alert alert-primary">Thanks for your order.</div>
+﻿@{
+    ViewData["Title"] = "Thanks!";
+}
+<div class="d-flex h-100 text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <main class="px-3">
+            <h1>Thanks for your Order.</h1>
+            <p class="lead">Your custom is very appreciated, we aim to dispatch orders within the next few working days!.</p>
+            <p class="lead">
+                <a class="btn btn-primary" asp-controller="Home" asp-action="Products" class="btn btn-outline-light ">Browse Products</a>
+            </p>
+            </main>
+    </div>
+</div>
+
+

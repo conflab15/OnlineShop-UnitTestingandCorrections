@@ -21,7 +21,6 @@ namespace OnlineShop2022.Models
         public string ImagePath { get; set; }
 
         public string Colour { get; set; }
-
         
         [Required]
         public int CategoryId { get; set; }

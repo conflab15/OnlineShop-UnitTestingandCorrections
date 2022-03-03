@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineShop2022.Models;
 using Stripe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OnlineShop2022.Controllers
 {
@@ -13,24 +10,32 @@ namespace OnlineShop2022.Controllers
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ShoppingCartModel _shoppingCart;
+        private readonly UserManager<CustomUserModel> _userManager;
 
-        public OrderController(IOrderRepository orderRepository, ShoppingCartModel shoppingCart)
+        public OrderController(IOrderRepository orderRepository, ShoppingCartModel shoppingCart, UserManager<CustomUserModel> userManager)
         {
             _orderRepository = orderRepository;
             _shoppingCart = shoppingCart;
+            _userManager = userManager;
         }
 
+        //Solution Additions: Amending the Checkout Page to include the Shopping Cart Contents, and to pass data from the current user to the form. 
         public IActionResult Checkout()
         {
-            return View();
-        }
+            var vm = new CheckoutViewModel(); //Implement a new ViewModel
+            vm.CartItems = _shoppingCart.GetShoppingCartItems(); //Assign the ShoppingCartItem List with the items from the cart
+            vm.CartTotal = _shoppingCart.GetShoppingCartTotal();
+            var currentUser = _userManager.FindByEmailAsync(User.Identity.Name); //Get the current user
+            vm.Forename = currentUser.Result.Fname.ToString(); //Assigning the users details where applicable
+            vm.Surname = currentUser.Result.Sname.ToString();
+            vm.Email = User.Identity.Name;
 
-        
+            return View(vm);
+        }
         public IActionResult Payment(OrderModel order)
         {
             return View(order);
         }
-
 
         [HttpPost]
         public ActionResult Pay(PaymentIntentCreateRequest request)
@@ -70,10 +75,10 @@ namespace OnlineShop2022.Controllers
         }
 
         [HttpPost]
-        public IActionResult Checkout(OrderModel order)
+        public IActionResult Checkout(CheckoutViewModel checkout)
         {
-            var items = _shoppingCart.GetShoppingCartItems();
-            _shoppingCart.ShoppingCartItems = items;
+            var items = _shoppingCart.GetShoppingCartItems(); //Gets the Shopping Cart Items
+            _shoppingCart.ShoppingCartItems = items; //Not sure what this does?
 
             if (_shoppingCart.ShoppingCartItems.Count == 0)
             {
@@ -82,17 +87,16 @@ namespace OnlineShop2022.Controllers
 
             if (ModelState.IsValid)
             {
-                _orderRepository.CreateOrder(order);
+                _orderRepository.CreateOrder(checkout.Order);
                 _shoppingCart.ClearCart();
-                return RedirectToAction("Payment", order);
+                return RedirectToAction("Payment", checkout.Order);
             }
 
-            return View(order);
+            return View(checkout);
         }
 
         public IActionResult CheckoutComplete()
         {
-
             return View();
         }
     }

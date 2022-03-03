@@ -1,7 +1,7 @@
 ﻿@model PaginatedList<OnlineShop2022.Models.ProductModel>
 
 @{
-    ViewData["Title"] = "Products ";
+    ViewData["Title"] = "Products";
 }
 
 <!-- Solution Additions:  The ability to search and filter products. -->
@@ -50,6 +50,8 @@
         }
     }
 </div>
+
+<!-- Solution Addition: Pagination, which shows 3 products per page! -->
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
