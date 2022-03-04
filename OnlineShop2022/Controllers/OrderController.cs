@@ -80,6 +80,7 @@ namespace OnlineShop2022.Controllers
             var items = _shoppingCart.GetShoppingCartItems(); //Gets the Shopping Cart Items
             _shoppingCart.ShoppingCartItems = items; //Not sure what this does?
 
+
             if (_shoppingCart.ShoppingCartItems.Count == 0)
             {
                 ModelState.AddModelError("", "Your cart is empty, please add some products.");
@@ -87,6 +88,8 @@ namespace OnlineShop2022.Controllers
 
             if (ModelState.IsValid)
             {
+                //ERROR: The OrderLines field has nothing assigned to it.
+                //Error Fix: Creating OrderDetailModels to assign to the OrderModel
                 _orderRepository.CreateOrder(checkout.Order);
                 _shoppingCart.ClearCart();
                 return RedirectToAction("Payment", checkout.Order);

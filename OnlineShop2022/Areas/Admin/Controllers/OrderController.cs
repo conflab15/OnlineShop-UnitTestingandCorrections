@@ -38,11 +38,18 @@ namespace OnlineShop2022
 
             var orderModel = await _context.Orders
                 .FirstOrDefaultAsync(m => m.OrderId == id);
+
             if (orderModel == null)
             {
                 return NotFound();
             }
 
+            //ERROR FIX: The OrderLines value for each model was always null.
+            //Solution Fix: By using the bottom .Where line populates the OrderLines Value to display the Products ordered within the details page.
+            orderModel.OrderLines = await _context.OrderDetails.Where(o => o.OrderId == orderModel.OrderId).Include("Product").ToListAsync();
+
+            orderModel.OrderTotal = orderModel.OrderLines.Sum(item => item.Price * item.Amount);
+            
             return View(orderModel);
         }
 
@@ -57,7 +64,7 @@ namespace OnlineShop2022
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,FirstName,LastName,AddressLine1,AddressLine2,Postcode,City,Country,Email")] OrderModel orderModel)
+        public async Task<IActionResult> Create([Bind("OrderId,FirstName,LastName,AddressLine1,AddressLine2,Postcode,City,Country,Email,OrderStatus")] OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +96,7 @@ namespace OnlineShop2022
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,FirstName,LastName,AddressLine1,AddressLine2,Postcode,City,Country,Email")] OrderModel orderModel)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderId,FirstName,LastName,AddressLine1,AddressLine2,Postcode,City,Country,Email,OrderStatus")] OrderModel orderModel)
         {
             if (id != orderModel.OrderId)
             {

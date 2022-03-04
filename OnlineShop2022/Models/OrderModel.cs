@@ -11,16 +11,17 @@ namespace OnlineShop2022.Models
     {
         //[BindNever]
         [Key]
+        [Display(Name = "Order ID")]
         public int OrderId { get; set; }
-        public List<OrderDetailModel> OrderLines { get; set; }
+        public List<OrderDetailModel> OrderLines { get; set; } //List of Products the Customer has ordered
 
         [Required(ErrorMessage = "Please enter your first name")]
-        [Display(Name = "First name")]
+        [Display(Name = "First Name")]
         [StringLength(50)]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Please enter your last name")]
-        [Display(Name = "Last name")]
+        [Display(Name = "Last Name")]
         [StringLength(50)]
         public string LastName { get; set; }
 
@@ -54,11 +55,16 @@ namespace OnlineShop2022.Models
 
         //[BindNever]
         //[ScaffoldColumn(false)]
+        [Display(Name = "Order Total")]
         public double OrderTotal { get; set; }
 
         //[BindNever]
         //[ScaffoldColumn(false)]
+        [Display(Name = "Order Placed")]
         public DateTime OrderPlaced { get; set; }
+
+        [Display(Name = "Order Status")]
+        public string OrderStatus { get; set; }
 
     }
 }

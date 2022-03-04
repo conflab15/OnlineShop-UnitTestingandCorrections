@@ -1,5 +1,6 @@
 ﻿using OnlineShop2022.Data;
 using System;
+using System.Collections.Generic;
 
 namespace OnlineShop2022.Models
 {
@@ -18,6 +19,8 @@ namespace OnlineShop2022.Models
         public async void CreateOrder(OrderModel order)
         {
             order.OrderPlaced = DateTime.Now;
+
+            order.OrderStatus = "Placed";
 
             _appDbContext.Orders.Add(order);
 

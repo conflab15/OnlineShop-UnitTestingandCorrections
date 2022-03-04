@@ -81,14 +81,14 @@
                 <label asp-for="Order.Country"></label>
                 <select asp-for="Order.Country" class="custom-select d-block w-100" required>
                   <option value="">Choose...</option>
-                  <option>United Kingdom</option>
-                  <option>United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="United States">United States</option>
                 </select>
                 <span asp-validation-for="Order.Country" class="text-danger"></span>
               </div>
               <div class="col-md-3 mb-3">
                 <label asp-for="Order.Postcode"></label>
-                <input asp-for="Order.Postcode" class="form-control" placeholder="" required>
+                <input asp-for="Order.Postcode" class="form-control" placeholder="TA5 2AX" required>
               </div>
             </div>
             <hr class="mb-4">

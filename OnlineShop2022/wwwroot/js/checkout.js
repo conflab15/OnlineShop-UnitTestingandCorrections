@@ -39,7 +39,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-        return_url: '@Url.Action("CheckoutComplete")',
+        return_url: "https://localhost:44306/Order/CheckoutComplete",
     },
   });
 
