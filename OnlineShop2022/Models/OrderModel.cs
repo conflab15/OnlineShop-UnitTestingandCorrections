@@ -63,6 +63,7 @@ namespace OnlineShop2022.Models
         [Display(Name = "Order Placed")]
         public DateTime OrderPlaced { get; set; }
 
+        //Feature Addition: Order Statuses have been added to allow customers and managers to track the status of their order.
         [Display(Name = "Order Status")]
         public string OrderStatus { get; set; }
 

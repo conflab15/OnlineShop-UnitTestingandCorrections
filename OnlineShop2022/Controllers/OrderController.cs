@@ -88,8 +88,6 @@ namespace OnlineShop2022.Controllers
 
             if (ModelState.IsValid)
             {
-                //ERROR: The OrderLines field has nothing assigned to it.
-                //Error Fix: Creating OrderDetailModels to assign to the OrderModel
                 _orderRepository.CreateOrder(checkout.Order);
                 _shoppingCart.ClearCart();
                 return RedirectToAction("Payment", checkout.Order);

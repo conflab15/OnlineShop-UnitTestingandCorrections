@@ -1,0 +1,107 @@
+﻿@model OnlineShop2022.Models.OrderModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Order: @Model.OrderId</h1>
+
+<div>
+    <div class="row">
+        <div class="col">
+            <h4>Details</h4>
+            <hr />
+            <dl class="row">
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.OrderPlaced)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.OrderPlaced)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.OrderStatus)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.OrderStatus)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.AddressLine1)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.AddressLine1)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.AddressLine2)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.AddressLine2)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Postcode)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Postcode)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.City)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.City)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Country)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Country)
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class = "col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+            </dl>
+        </div>
+        <div class="col">
+            <h4>Ordered Products</h4>
+
+            <div class="container">
+                <div class="row justify-content-center">
+                @foreach(var product in Model.OrderLines)
+                {
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card text-black">
+                      <img src="@product.Product.ImagePath" class="card-img-top" alt="Apple Computer" />
+                      <div class="card-body">
+                        <div class="text-center">
+                          <h5 class="card-title">@product.Product.Description</h5>
+                          <p class="text-muted mb-4">Quantity: @product.Amount</p>
+                        </div>
+                        <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                          <span>Total</span><span>£@product.Price</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  }
+                </div>
+              </div>
+            <h4>Order Total: £@Model.OrderTotal</h4>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>

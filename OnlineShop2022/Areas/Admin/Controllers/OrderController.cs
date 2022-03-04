@@ -44,7 +44,7 @@ namespace OnlineShop2022
                 return NotFound();
             }
 
-            //ERROR FIX: The OrderLines value for each model was always null.
+            //ERROR FIX: The OrderLines value for each model was always null, which means the OrderLines cannot be accessed from the Details .
             //Solution Fix: By using the bottom .Where line populates the OrderLines Value to display the Products ordered within the details page.
             orderModel.OrderLines = await _context.OrderDetails.Where(o => o.OrderId == orderModel.OrderId).Include("Product").ToListAsync();
 
