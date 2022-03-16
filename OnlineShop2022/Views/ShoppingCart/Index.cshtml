@@ -41,7 +41,7 @@
                     <td class="text-right">@product.Product.Price.ToString("c")</td>
                     <td class="text-right">
                         @((product.Amount*product.Product.Price).ToString("c"))
-                                        <a class="btn btn-primary ms-3" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-ProductId="@product.Product.Id">Remove</a>
+                                        <a class="btn btn-primary ms-3" name="removeItem" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-ProductId="@product.Product.Id">Remove</a>
 
                     </td>
                 </tr>
@@ -58,8 +58,8 @@
         </table>
 
         <div class="text-center">
-            <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Proceed to Checkout</a>
-            <a class="btn btn-danger ms-3" asp-controller="ShoppingCart" asp-action="ClearCart">Empty Basket</a>
+            <a class="btn btn-primary" name="checkout" asp-controller="Order" asp-action="Checkout">Proceed to Checkout</a>
+            <a class="btn btn-danger ms-3" name="emptyCart" asp-controller="ShoppingCart" asp-action="ClearCart">Empty Basket</a>
 
         </div>
     }

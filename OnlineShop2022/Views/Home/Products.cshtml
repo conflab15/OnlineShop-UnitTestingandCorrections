@@ -21,13 +21,13 @@
 
 <div class="row justify-content-center p-3">
     <div class="col d-flex justify-content-center">
-        <a asp-action="Products" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-success">Sort by Name (A-Z)</a>
+        <a asp-action="Products" asp-route-sortOrder="@ViewData["NameSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-success" name="sortByName">Sort by Name (A-Z)</a>
     </div>
     <div class="col d-flex justify-content-center">
-        <a asp-action="Products" asp-route-sortOrder="@ViewData["PriceSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-success">Sort by Price (Ascending)</a>
+        <a asp-action="Products" asp-route-sortOrder="@ViewData["PriceSortParam"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-success" name="sortByPrice">Sort by Price (Ascending)</a>
     </div>
     <div class="col d-flex justify-content-center">
-        <a asp-action="Products" class="btn btn-danger">Back to full Products list</a>
+        <a asp-action="Products" class="btn btn-danger" name="resetList">Back to full Products list</a>
     </div>
 </div>
 
@@ -39,11 +39,11 @@
                 <div class="card">
                     <img src="@product.ImagePath" class="card-img-top img-product-main" alt="@product.Description">
                     <div class="card-body">
-                        <p class="card-text">@product.Description</p>
-                        <p class="card-text">£@product.Price</p>
+                        <p class="card-text" name="productDesc">@product.Description</p>
+                        <p class="card-text" name="productPrice">£@product.Price</p>
                         <!-- Error Fix: within the Products View, there was previously no ability to add a product to the basket within this view.
                              The button, with the valid route, has been added to this view.-->
-                        <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-ProductId="@product.Id">Add to cart</a>
+                        <a class="btn btn-primary" name="addToCartBtn" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-ProductId="@product.Id">Add to cart</a>
                     </div>
                 </div>
             </div>
@@ -62,6 +62,7 @@
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   name="previousBtn"
    class="btn btn-primary btn-sm @prevDisabled">
     Previous
 </a>
@@ -69,6 +70,7 @@
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   name="nextBtn"
    class="btn btn-primary btn-sm @nextDisabled">
     Next
 </a>
