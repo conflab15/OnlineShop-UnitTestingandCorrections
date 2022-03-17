@@ -69,7 +69,7 @@ namespace OnlineShop2022.Controllers
                     break;
             }
 
-            int pageSize = 3;
+            int pageSize = 3; //Number of Products shown on a page.
             return View(await PaginatedList<ProductModel>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 

@@ -1,5 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.Extensions.Logging;
 using OnlineShop2022.Controllers;
 using OnlineShop2022.Data;
@@ -45,10 +45,24 @@ namespace OnlineShopUnitTests
             var controller = new HomeController(_logger, _context);
 
             //Act
-            //var result = controller.Products("1");
+            var result = controller.Products("name_desc", "", "", 1);
             
             //Assert
-            //Assert.NotNull(result);
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void HomeControllerPrivacyAction_ReturnsView()
+        {
+            //Test - Privacy Action returns a View
+            //Arrange
+            var controller = new HomeController(_logger, _context);
+
+            //Act
+            var result = controller.Privacy();
+
+            //Assert
+            Assert.IsType<ViewResult>(result);
         }
     }
 }

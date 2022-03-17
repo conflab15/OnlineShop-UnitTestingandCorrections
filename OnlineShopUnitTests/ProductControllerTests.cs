@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using OnlineShop2022.Areas.Admin;
-using OnlineShop2022.Controllers;
 using OnlineShop2022.Data;
 using OnlineShop2022.Helpers;
 using OnlineShop2022.Models;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -61,37 +57,19 @@ namespace OnlineShopUnitTests
             Assert.IsType<NotFoundResult>(result); //Pass if the result is NotFound
         }
 
-        [Fact] //This is currently a mess
-        public void ProductControllerCreateAction_RedirectToActionIfSuccessful()
+        [Fact]
+        public void CreateProductControllerGET_ReturnsAViewModel()
         {
-            //Test - if product is successfully added, a RedirectToAction index is returned
-            //Arrange Test
+            //Test - when the GET Create action is called, return a ViewModel
+            //Arrange
             CreateMockDb();
             var controller = new ProductController(_context, _webHostEnv, _imageHelp);
-            var catController = new CategoryController(_context);
-            var category = new CategoryModel { Id = 50, Name = "TestCategory" }; //New Category
-            var addCat = catController.Create(category);
-            var product = new ProductModel
-            {
-                Id = 20,
-                Description = "Test Product",
-                Price = 10.99,
-                Colour = "Blue",
-                CategoryId = 50,
-                Category = category
-            };
 
-            var viewModel = new ProductViewModel
-            {
-                Categories = _context.Categories.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                Product = product
-            };
-            
+            //Act
+            var result = controller.Create();
+
+            //Assert
+            Assert.IsType<ViewResult>(result);
         }
-
     }
 }
