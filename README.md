@@ -15,3 +15,5 @@ Once these errors were corrected, I implemented the following additional feature
 # Amended Checkout with auto-filled user details
 ![image](https://user-images.githubusercontent.com/43405874/160837920-8a21ee95-157e-4665-8638-8bbd75a46ce8.png)
 
+# Selenium Test Code Snippet
+![image](https://user-images.githubusercontent.com/43405874/160838302-a0d416bb-6178-4b28-b30e-208355f728e2.png)
